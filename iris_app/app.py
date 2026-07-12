@@ -15,7 +15,8 @@ from iris_app.visualization import (
     fps_goster, 
     iris_cember_ciz, 
     iris_panel, 
-    orta_sonuc_kutusu
+    orta_sonuc_kutusu,
+    yuz_maskesi_ciz
 )
 
 def analiz_et(kare, landmarker, ms_sayaci, sol_yum, sag_yum, mod="canli"):
@@ -31,6 +32,10 @@ def analiz_et(kare, landmarker, ms_sayaci, sol_yum, sag_yum, mod="canli"):
 
     if yuz_var:
         landmarks = sonuc.face_landmarks[0]
+        
+        # Yüz maskesi (örümcek ağı) çizimi
+        yuz_maskesi_ciz(kare, landmarks, h_k, w_k)
+
         # İrisleri görselleştir
         iris_cember_ciz(kare, landmarks, IRIS_SOL_IDX, h_k, w_k)
         iris_cember_ciz(kare, landmarks, IRIS_SAG_IDX, h_k, w_k)

@@ -9,6 +9,21 @@ YESIL = (0, 220, 120)
 BEYAZ = (240, 240, 240)
 GRI = (140, 140, 140)
 
+from mediapipe.tasks.python.vision.face_landmarker import FaceLandmarksConnections
+from mediapipe.tasks.python.vision import drawing_utils as mp_drawing
+
+def yuz_maskesi_ciz(frame, landmarks, h_f: int, w_f: int) -> None:
+    # Örümcek ağı (tessellation) stili - ince ve profesyonel
+    ag_stili = mp_drawing.DrawingSpec(color=(200, 200, 200), thickness=1, circle_radius=0)
+    nokta_stili = mp_drawing.DrawingSpec(color=(200, 200, 200), thickness=0, circle_radius=0) # Noktaları gizle
+    
+    mp_drawing.draw_landmarks(
+        image=frame,
+        landmark_list=landmarks,
+        connections=FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION,
+        landmark_drawing_spec=nokta_stili,
+        connection_drawing_spec=ag_stili)
+
 
 def fps_goster(frame, fps: float) -> None:
     w = frame.shape[1]
