@@ -132,8 +132,15 @@ def main() -> None:
 
         sonuc_kare = analiz_et(kare, landmarker, 100, sol_yum, sag_yum, mod="resim")
         cv2.imshow("Iris Analiz Sonucu (Resim)", sonuc_kare)
-        print("  Sonuç penceresini kapatmak için bir tuşa basın...")
-        cv2.waitKey(0)
+        print("  Kaydetmek için 's', çıkmak için 'q' veya başka bir tuşa basın...")
+        while True:
+            tus = cv2.waitKey(0) & 0xFF
+            if tus == ord("s"):
+                dosya = f"iris_analiz_resim_{int(time.time())}.png"
+                cv2.imwrite(dosya, sonuc_kare)
+                print(f"  Kaydedildi: {dosya}")
+            else:
+                break
     
     else:
         # --- CANLI KAMERA MODU ---
