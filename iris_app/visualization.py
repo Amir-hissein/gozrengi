@@ -13,8 +13,8 @@ from mediapipe.tasks.python.vision.face_landmarker import FaceLandmarksConnectio
 from mediapipe.tasks.python.vision import drawing_utils as mp_drawing
 
 def yuz_maskesi_ciz(frame, landmarks, h_f: int, w_f: int) -> None:
-    # Örümcek ağı (tessellation) stili - ince ve profesyonel
-    ag_stili = mp_drawing.DrawingSpec(color=(200, 200, 200), thickness=1, circle_radius=0)
+    # Örümcek ağı (tessellation) stili - ince ve profesyonel (Farmasötik Mavi)
+    ag_stili = mp_drawing.DrawingSpec(color=(210, 140, 20), thickness=1, circle_radius=0)
     nokta_stili = mp_drawing.DrawingSpec(color=(200, 200, 200), thickness=0, circle_radius=0) # Noktaları gizle
     
     mp_drawing.draw_landmarks(
