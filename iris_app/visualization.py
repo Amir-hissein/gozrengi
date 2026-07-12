@@ -137,7 +137,7 @@ def yuz_boyutu_goster(frame, width_px: int, height_px: int) -> None:
     metin = f"Yuz Boyutu: {width_px} x {height_px} px"
     
     (tw, th), _ = cv2.getTextSize(metin, cv2.FONT_HERSHEY_SIMPLEX, 0.45, 1)
-    px, py = w_f - tw - 20, 30
+    px, py = w_f - tw - 20, h_f - th - 50  # Ekranın sağ alt köşesine konumlandır
     
     # Yarı saydam arka plan için overlay kullanımı daha profesyonel olur, ancak basit rectangle da iş görür
     cv2.rectangle(frame, (px - 10, py - 10), (px + tw + 10, py + th + 10), (25, 25, 25), -1)
