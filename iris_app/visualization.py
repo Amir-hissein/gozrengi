@@ -12,17 +12,38 @@ GRI = (140, 140, 140)
 from mediapipe.tasks.python.vision.face_landmarker import FaceLandmarksConnections
 from mediapipe.tasks.python.vision import drawing_utils as mp_drawing
 
-def yuz_maskesi_ciz(frame, landmarks, h_f: int, w_f: int) -> None:
-    # Örümcek ağı (tessellation) stili - ince ve profesyonel (Farmasötik Mavi)
-    ag_stili = mp_drawing.DrawingSpec(color=(210, 140, 20), thickness=1, circle_radius=0)
-    nokta_stili = mp_drawing.DrawingSpec(color=(200, 200, 200), thickness=0, circle_radius=0) # Noktaları gizle
+_mask_anim_progress = 0.0
+
+def yuz_maskesi_reset():
+    global _mask_anim_progress
+    _mask_anim_progress = 0.0
+
+def yuz_maskesi_ciz(frame, landmarks, h_f: int, w_f: int, mod: str = "canli") -> None:
+    global _mask_anim_progress
     
-    mp_drawing.draw_landmarks(
-        image=frame,
-        landmark_list=landmarks,
-        connections=FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION,
-        landmark_drawing_spec=nokta_stili,
-        connection_drawing_spec=ag_stili)
+    if mod == "resim":
+        progress = 1.0
+    else:
+        _mask_anim_progress = min(_mask_anim_progress + 0.025, 1.0) # ~1.3 saniyede tamamlanır
+        progress = _mask_anim_progress
+    
+    # Açık yeşil (Vert claire) stili - BGR formatında
+    ag_stili = mp_drawing.DrawingSpec(color=(150, 255, 150), thickness=1, circle_radius=0)
+    nokta_stili = mp_drawing.DrawingSpec(color=(150, 255, 150), thickness=0, circle_radius=0)
+    
+    # Animasyon için bağlantıları yukarıdan aşağıya sırala
+    tum_baglantilar = list(FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION)
+    tum_baglantilar.sort(key=lambda conn: (landmarks[conn.start].y + landmarks[conn.end].y) / 2)
+    
+    limit = int(len(tum_baglantilar) * progress)
+    
+    if limit > 0:
+        mp_drawing.draw_landmarks(
+            image=frame,
+            landmark_list=landmarks,
+            connections=tum_baglantilar[:limit],
+            landmark_drawing_spec=nokta_stili,
+            connection_drawing_spec=ag_stili)
 
 
 def fps_goster(frame, fps: float) -> None:

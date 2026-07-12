@@ -34,7 +34,7 @@ def analiz_et(kare, landmarker, ms_sayaci, sol_yum, sag_yum, mod="canli"):
         landmarks = sonuc.face_landmarks[0]
         
         # Yüz maskesi (örümcek ağı) çizimi
-        yuz_maskesi_ciz(kare, landmarks, h_k, w_k)
+        yuz_maskesi_ciz(kare, landmarks, h_k, w_k, mod)
 
         # İrisleri görselleştir
         iris_cember_ciz(kare, landmarks, IRIS_SOL_IDX, h_k, w_k)
@@ -83,6 +83,8 @@ def analiz_et(kare, landmarker, ms_sayaci, sol_yum, sag_yum, mod="canli"):
 
         durum_cubugu(kare, "Analiz tamamlandi | q: Cikis | s: Kaydet")
     else:
+        from iris_app.visualization import yuz_maskesi_reset
+        yuz_maskesi_reset()
         durum_cubugu(kare, "Yuz bulunamadi - Kameraya yaklasin", renk=(80, 80, 200))
     
     return kare

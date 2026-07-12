@@ -22,6 +22,9 @@ def iris_kirp(frame: np.ndarray, landmarks: list, iris_idx: list[int], padding: 
     kirpilmis = frame[y1:y2, x1:x2].copy()
     hk, wk = kirpilmis.shape[:2]
 
+    if hk == 0 or wk == 0:
+        return None
+
     # Halka Maskesi: Gözbebeğini (merkezi %20) dışarıda bırakır
     maske = np.zeros((hk, wk), dtype=np.uint8)
     dis_r = max(min(wk, hk) // 2 - 2, 1)
