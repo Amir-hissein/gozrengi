@@ -27,12 +27,28 @@ def yuz_maskesi_ciz(frame, landmarks, h_f: int, w_f: int, mod: str = "canli") ->
         _mask_anim_progress = min(_mask_anim_progress + 0.025, 1.0) # ~1.3 saniyede tamamlanır
         progress = _mask_anim_progress
     
-    # Açık yeşil (Vert claire) stili - BGR formatında
-    ag_stili = mp_drawing.DrawingSpec(color=(150, 255, 150), thickness=1, circle_radius=0)
-    nokta_stili = mp_drawing.DrawingSpec(color=(150, 255, 150), thickness=0, circle_radius=0)
+    # #0097b2 rengi - BGR formatında (178, 151, 0)
+    ag_stili = mp_drawing.DrawingSpec(color=(178, 151, 0), thickness=1, circle_radius=0)
+    nokta_stili = mp_drawing.DrawingSpec(color=(178, 151, 0), thickness=0, circle_radius=0)
+    
+    # Göz çevresinde boşluk bırakmak için göz ve kaş noktalarını dışla
+    dislanacak_noktalar = set()
+    for kategori in [
+        FaceLandmarksConnections.FACE_LANDMARKS_LEFT_EYE,
+        FaceLandmarksConnections.FACE_LANDMARKS_RIGHT_EYE,
+        FaceLandmarksConnections.FACE_LANDMARKS_LEFT_IRIS,
+        FaceLandmarksConnections.FACE_LANDMARKS_RIGHT_IRIS,
+        FaceLandmarksConnections.FACE_LANDMARKS_LEFT_EYEBROW,
+        FaceLandmarksConnections.FACE_LANDMARKS_RIGHT_EYEBROW
+    ]:
+        for conn in kategori:
+            dislanacak_noktalar.add(conn.start)
+            dislanacak_noktalar.add(conn.end)
+
+    tum_baglantilar = [conn for conn in FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION 
+                       if conn.start not in dislanacak_noktalar and conn.end not in dislanacak_noktalar]
     
     # Animasyon için bağlantıları yukarıdan aşağıya sırala
-    tum_baglantilar = list(FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION)
     tum_baglantilar.sort(key=lambda conn: (landmarks[conn.start].y + landmarks[conn.end].y) / 2)
     
     limit = int(len(tum_baglantilar) * progress)
