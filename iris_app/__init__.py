@@ -1,0 +1,1 @@
+"""Iris color detector package."""
