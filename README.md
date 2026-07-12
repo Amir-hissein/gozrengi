@@ -16,9 +16,13 @@ Bu proje, görüntü işleme ve yapay zeka tekniklerini kullanarak yüz üzerind
 
 ## 📸 Örnek Analiz Çıktısı
 
-Aşağıda uygulamanın fotoğraflar üzerindeki analizine bir örnek verilmiştir. Göz bebekleri algılanmış ve renk tespiti yapılarak ekrana yansıtılmıştır:
+Aşağıda uygulamanın gerçek zamanlı kamera ve statik fotoğraflar üzerindeki analizine örnekler verilmiştir. Göz bebekleri algılanmış, yüz maskesi uygulanmış ve renk tespiti yapılarak ekrana yansıtılmıştır:
 
-![Göz Rengi Tespiti Örneği](demo.jpg)
+### 🎥 Canlı Kamera Modu
+![Canlı Mod](iris_analiz_1783888915.png)
+
+### 🖼️ Fotoğraf Analiz Modu
+![Fotoğraf Modu](iris_analiz_resim_1783889392.png)
 
 ## 🛠️ Kurulum
 
