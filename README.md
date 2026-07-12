@@ -123,4 +123,4 @@ Uygulama başlatıldığında aşağıdaki seçeneklerle etkileşime geçebilirs
   Klavyenizden `s` tuşuna basarak anlık görüntüyü diskinize kaydedebilirsiniz.
 
 ---
-*Developer / Geliştirici: Amir-Hissein*
+*Developer / Geliştirici: [Amir-hissein](https://github.com/Amir-hissein)*
