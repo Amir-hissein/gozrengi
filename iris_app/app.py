@@ -33,6 +33,18 @@ def analiz_et(kare, landmarker, ms_sayaci, sol_yum, sag_yum, mod="canli"):
     if yuz_var:
         landmarks = sonuc.face_landmarks[0]
         
+        # Yüz boyutunu hesapla
+        min_x = min(lm.x for lm in landmarks)
+        max_x = max(lm.x for lm in landmarks)
+        min_y = min(lm.y for lm in landmarks)
+        max_y = max(lm.y for lm in landmarks)
+        
+        yuz_w = int((max_x - min_x) * w_k)
+        yuz_h = int((max_y - min_y) * h_k)
+        
+        from iris_app.visualization import yuz_boyutu_goster
+        yuz_boyutu_goster(kare, yuz_w, yuz_h)
+
         # Yüz maskesi (örümcek ağı) çizimi
         yuz_maskesi_ciz(kare, landmarks, h_k, w_k, mod)
 

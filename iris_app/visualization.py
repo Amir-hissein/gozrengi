@@ -132,6 +132,20 @@ def orta_sonuc_kutusu(frame, en_iyi: RenkSonucu, ort_r: int, ort_g: int, ort_b: 
         cv2.LINE_AA,
     )
 
+def yuz_boyutu_goster(frame, width_px: int, height_px: int) -> None:
+    h_f, w_f = frame.shape[:2]
+    metin = f"Yuz Boyutu: {width_px} x {height_px} px"
+    
+    (tw, th), _ = cv2.getTextSize(metin, cv2.FONT_HERSHEY_SIMPLEX, 0.45, 1)
+    px, py = w_f - tw - 20, 30
+    
+    # Yarı saydam arka plan için overlay kullanımı daha profesyonel olur, ancak basit rectangle da iş görür
+    cv2.rectangle(frame, (px - 10, py - 10), (px + tw + 10, py + th + 10), (25, 25, 25), -1)
+    cv2.rectangle(frame, (px - 10, py - 10), (px + tw + 10, py + th + 10), (100, 100, 100), 1)
+    
+    # Yazı (Farmasötik Mavi ile)
+    cv2.putText(frame, metin, (px, py + th), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (178, 151, 0), 1, cv2.LINE_AA)
+
 def iris_cember_ciz(frame, landmarks, iris_idx: list[int], h_f: int, w_f: int) -> None:
     if iris_idx[0] >= len(landmarks):
         return
